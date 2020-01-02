@@ -16,10 +16,22 @@ body, html{
   display: inline-flex;
   flex-wrap: wrap;
 }
+
+
 .leaves{
     background-color: green;
+
 }
 .emptySqure{
     height: 50px;
     width: 50px;
+
+}
+
+.ground{
+    background-color: brown;
+}
+
+.stone{
+    background-color: rgb(64, 75, 87);
 }
