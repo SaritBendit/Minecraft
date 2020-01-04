@@ -3,10 +3,11 @@
 }
 body, html{
     padding: 0;
-    margin: 0;
+    margin: 20px 0 0 0;
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 .continer{
     display: inline-flex;
@@ -22,13 +23,18 @@ body, html{
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-
     height:900px;
     margin-right: 10px;
     width: 300px;
 }
 
 .toolsImg{
+    width: 150px;
+    height: 150px;
+    border: black 2px solid;
+     margin: 20px;
+}
+.item{
     width: 150px;
     height: 150px;
     border: black 2px solid;
@@ -41,6 +47,11 @@ body, html{
     height:900px;
     padding: 0;
     margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
 .game{
@@ -52,37 +63,29 @@ body, html{
   flex-wrap: wrap;
 
 }
-
-
 .leaves{
     background-image: url("./img/leaves.jpg");
 
-
+}
+.treetrunk{
+    background-image: url("./img/treetrunk.png");
 }
 .emptySqure{
     height: 60px;
     width: 60px;
-
 }
-
 .ground{
     background-image: url("./img/gound1.png");
-
 }
 .stone{
     background-image: url("./img/stone1.jpg");
 }
-.trunk{
-    background-image: url("./img/treetrunk.png");
-
-}
-
 #curoserAxe{
     cursor: url(./img/vect.png), auto;
-
 }
 #curoserPickaxe{
     cursor: url(./img/PickaxeCur.png), auto;
-
 }
-
+#curoserShovel{
+    cursor: url(./img/shovelCur.png), auto;
+}
