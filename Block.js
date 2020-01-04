@@ -1,5 +1,5 @@
 class Block {
-    constructor(type, img , count) {
+    constructor(type, img ) {
         this.type = type;
         this.img = img;
         this.count = 0;

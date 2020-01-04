@@ -1,11 +1,11 @@
 var myWorld = [[], []];
-let groundBlock = new Block("ground" ,"./img/gound1.png" , 0);
-let stoneBlock = new Block("stone" ,"./img/stone1.jpg" , 0);
-let leavesBlock = new Block("leaves" ,"./img/leaves.jpg" , 0);
-let treeTrunkBlock = new Block("tree trunk" ,"./img/treetrunk.png" , 0);
-
 let div = document.createElement("div");
 let game = document.querySelector(".game");
+let groundBlock = new Block("ground" ,"./img/gound1.png" );
+let stoneBlock = new Block("stone" ,"./img/stone1.jpg" );
+let leavesBlock = new Block("leaves" ,"./img/" );
+let treeTrunkBlock = new Block("tree trunk" ,"./img/" );
+
 let start = () => {
     for (var i = 0; i < 15; i++) {
         myWorld[i] = [];
@@ -35,19 +35,18 @@ let creatGround = () => {
 //getting a first position of myWorld[i][j] of the tree
 let creatTree = (starti, startj) => {
     let x, y;
-    myWorld.indexOf([x, y])
     {
         for (x = starti; x < starti + 3; x++) {
             for (y = startj; y < startj + 3; y++) {
                 let position = "r" + x + "c" + y;
                 document.querySelector(`#${position}`).classList.add("leaves");
+                console.log(position);
             }
 
         }
         for (let x = starti + 3; x < 11; x++) {
-            let position = "r" + x + "c7";
+            let position = "r" + x + "c"+(startj+1);
             document.querySelector(`#${position}`).classList.add("trunk");
-
         }
     }
 }
@@ -55,6 +54,7 @@ let creatTree = (starti, startj) => {
 let creatStone = (j, hight) => {
     //check if there is no tree/ground
     for (let indexi = 10; hight > 0; indexi-- , hight--) {
+        console.log(indexi);
         let stone = document.querySelector(`#r${indexi}c${j}`);
         if (!stone.classList.contains("leaves") && !stone.classList.contains("ground")) {
             document.querySelector(`#r${indexi}c${j}`).classList.add("stone");
@@ -63,12 +63,23 @@ let creatStone = (j, hight) => {
 }
 
 let playerWantTreesAxe= ()=>{
+    game.removeAttribute('id','curoserPickaxe');
+    game.removeAttribute('id','curosershovel');
     game.setAttribute('id','curoserAxe');
+    console.log( document.querySelector(".game"));
 }
 
 let playerWantGround = ()=>{
-    game.removeAttribute('id');
+    game.removeAttribute('id','curoserAxe');
+    game.removeAttribute('id','curosershovel');
     game.setAttribute('id','curoserPickaxe');
+    console.log(document.querySelector(".game"));
+}
+let playerWantRocks = ()=>{
+    game.removeAttribute('id','curoserAxe');
+    game.removeAttribute('id','curoserPickaxe');
+    game.setAttribute('id','curosershovel');
+    console.log(document.querySelector(".game"));
 }
 /*------getting the Row index for the squre player click------*/
 let getIndexRow = (target) => {
@@ -83,39 +94,56 @@ let getIndexCol = (target) => {
     return indexj;
 }
 /*----------remove tree from the world------------*/
-let removeTreeFromWorld = (e) => {
-    
+let removeTreetrunkFromWorld = (e) => {
     const squreToStorge = e.currentTarget.id;
+    console.log(squreToStorge);
+    if (!myWorld[getIndexRow(squreToStorge) - 1][getIndexCol(squreToStorge)].classList.contains("treetrunk")){
+        myWorld[getIndexRow(squreToStorge)][getIndexCol(squreToStorge)].classList.remove('treetrunk');
+        console.log(myWorld[getIndexRow(squreToStorge)][getIndexCol(squreToStorge)]);
+    }
+}
+let removeLeavesFromWorld = (e) => {
+    const squreToStorge = e.currentTarget.id;
+    console.log(squreToStorge);
     if (!myWorld[getIndexRow(squreToStorge) - 1][getIndexCol(squreToStorge)].classList.contains("leaves") ) {
         myWorld[getIndexRow(squreToStorge)][getIndexCol(squreToStorge)].classList.remove('leaves');
+        console.log(myWorld[getIndexRow(squreToStorge)][getIndexCol(squreToStorge)]);
     }
 }
 /*----------remove ground from the world------------*/
 let removeGroundFromWorld = (e) => {
     const squreToStorge = e.currentTarget.id;
+    console.log(myWorld[getIndexRow(squreToStorge)+1][getIndexCol(squreToStorge)].classList);
     if(!myWorld[getIndexRow(squreToStorge)-1][getIndexCol(squreToStorge)].classList.contains("leaves") && !myWorld[getIndexRow(squreToStorge)-1][getIndexCol(squreToStorge)].classList.contains("ground")&& !myWorld[getIndexRow(squreToStorge)-1][getIndexCol(squreToStorge)].classList.contains("stone")){
+        console.log(squreToStorge);
         myWorld[getIndexRow(squreToStorge)][getIndexCol(squreToStorge)].classList.remove('ground');
-        groundBlock.count++;
-        console.log(groundBlock.count);
-        
+        console.log(myWorld[getIndexRow(squreToStorge)][getIndexCol(squreToStorge)]);
     }
 }
 /*----------remove stone from the world------------*/
 let removeRockFromWorld = (e) => {
     const squreToStorge = e.currentTarget.id;
+    console.log(myWorld[getIndexRow(squreToStorge) + 1][getIndexCol(squreToStorge)].classList);
+    console.log(getIndexRow(squreToStorge) + 1);
+
     if (!myWorld[getIndexRow(squreToStorge) - 1][getIndexCol(squreToStorge)].classList.contains("stone")) {
+        console.log(squreToStorge);
         myWorld[getIndexRow(squreToStorge)][getIndexCol(squreToStorge)].classList.remove('stone');
-        stoneBlock.count++;
+        console.log(myWorld[getIndexRow(squreToStorge)][getIndexCol(squreToStorge)]);
     }
 }
 let removeSqureFromWorld =(e)=>{
-    if (e.target.classList.contains('ground')){
+    console.log(e.target);
+    if (e.target.classList.contains('ground') && (game.getAttribute("id") === "curoserPickaxe")){
         removeGroundFromWorld(e);
     }
-    if (e.target.classList.contains('leaves')){
-        removeTreeFromWorld(e);
+    if (e.target.classList.contains('leaves') && (game.getAttribute("id") === "curoserAxe")){
+        removeLeavesFromWorld(e);
     }
-    if (e.target.classList.contains('stone')){
+    if (e.target.classList.contains('treetrunk') && (game.getAttribute("id") === "curoserAxe")){
+        removeTreetrunkFromWorld(e);
+    }
+    if (e.target.classList.contains('stone') && (game.getAttribute("id") === "curosershovel")){
         removeRockFromWorld(e);
     }
 }
@@ -140,6 +168,8 @@ axe.addEventListener('click',playerWantTreesAxe);
 let pickaxe = document.querySelector('.pickaxe');
 pickaxe.addEventListener('click',playerWantRocks);
 */
-let shovel = document.querySelector('.shovel');
-shovel.addEventListener('click',playerWantGround);
+let pickaxe = document.querySelector('.pickaxe');
+console.log(pickaxe);
+
+pickaxe.addEventListener('click',playerWantGround);
 
